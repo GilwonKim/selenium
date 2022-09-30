@@ -28,7 +28,8 @@ driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
 driver.find_element(By.ID,"process_login").click();
 driver.find_element(By.ID,"user_id").send_keys("sun0yoon26");
 driver.find_element(By.ID,"user_password").send_keys("cotton123!");
-driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
+# driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
+time.sleep(1)
 driver.find_element(By.CLASS_NAME,"submit").click()
 
 #열리는 시간까지 새로고침
@@ -44,14 +45,21 @@ while True:
     else: end_time == now
     break
 
-#날짜 선택
+#황금내 날짜 선택
+# driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
+# time.sleep(0.2)
+# driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();
+
+#강서 굴다리 밑
+driver.find_element(By.CSS_SELECTOR,'#center > option:nth-child(3)').click();
+driver.implicitly_wait(1)
+driver.find_element(By.XPATH,'//*[@id="place"]/option[4]').click();
+driver.implicitly_wait(1)
+driver.find_element(By.CSS_SELECTOR,'#place > option:nth-child(4)').click();
+driver.implicitly_wait(1)
 driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
-driver.implicitly_wait(0.5)
-
-driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();
-
-    
-
+time.sleep(0.2)
+driver.find_element(By.CSS_SELECTOR,'#date-20221015').click();
 
 
 
