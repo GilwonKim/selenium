@@ -1,3 +1,4 @@
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -7,30 +8,57 @@ from selenium.webdriver.common.by import By
 import time
 import csv
 
+
 #기본 세팅
 def chromeWebdriver(): 
     chrome_service = ChromeService(executable_path=ChromeDriverManager().install())
     options = Options()
     options.add_experimental_option('detach', True)
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    
     driver = webdriver.Chrome(service=chrome_service, options=options)
-    
     return driver
 
 driver = chromeWebdriver()
 
 #웹사이트 열기
 driver.get('https://sports.gangseo.seoul.kr/fmcs/28?facilities_type=C&base_date=&rent_type=1001&center=GANGSEO05&part=02&place=1')
-driver.implicitly_wait(2) #로딩이 끝날 때까지 10초를 기다려준다.
+driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
+
+#로그인
+driver.find_element(By.ID,"process_login").click();
+driver.find_element(By.ID,"user_id").send_keys("sun0yoon26");
+driver.find_element(By.ID,"user_password").send_keys("cotton123!");
+driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
+driver.find_element(By.CLASS_NAME,"submit").click()
+
+#열리는 시간까지 새로고침
+while True:
+    now = datetime.now()
+    print(now)
+    start_time = now.replace(hour=22, minute=35)
+    end_time = now.replace(hour=23, minute=4)
+
+    if start_time < now < end_time:
+        driver.refresh()
+        continue
+    else: end_time == now
+    break
 
 #날짜 선택
-driver.find_element(By.ID,"next_month").click();
-driver.find_element(By.ID,"date-20221015").click();
+driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
+driver.implicitly_wait(0.5)
+
+driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();
+
+    
+
+
+
+
+
 
 #대관 신청 클릭
-driver.find_element(By.CLASS_NAME,"action_application").click();
-time.sleep(2)
+# time.sleep(2)
 
 
 # #무한 스크롤 내리기======================
