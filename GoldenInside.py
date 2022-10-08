@@ -1,5 +1,4 @@
 from datetime import datetime
-from tkinter import DISABLED
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -43,22 +42,23 @@ driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();
 time.sleep(0.5)
 
 #열리는 시간까지 새로고침
-# while True:
-#     now = datetime.now()
-#     print(now)
-#     start_time = now.replace(hour=12, minute=35)
-#     end_time = now.replace(hour=13, minute=57)
+while True:
+    now = datetime.now()
+    print(now)
+    # start_time = now.replace(hour=12, minute=35)
+    end_time = now.replace(hour=13, minute=00)
 
-#     if start_time < now < end_time:
-#         time.sleep(0.25) #로딩시간까지 0.25초 기다림  
-#         driver.refresh()
-#         continue
-#     else: end_time == now
-#     break
-
-
-if driver.find_element(By.XPATH,"//*[@id='checkbox_time_1']").get_attribute('value disabled') == DISABLED:
+    if (driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").get_attribute("stlye") == None) and (now <= end_time): #체크로 바뀌거나 오픈 시간에 도달하면 refresh를 멈춤
+        # time.sleep(0.1) #로딩시간까지 0.25초 기다림
+        driver.refresh()
+        continue
+    else: driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").get_attribute("stlye") != None
+    driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").click(); #클릭 할 게 없으면 에러 발생함
+    driver.implicitly_wait(0.5) #로딩이 끝날 때까지 0.5초를 기다려준다.
     driver.find_element(By.CSS_SELECTOR,'#contents > article > div > div > div.order_r > button').click();
+    break
+
+
 
 #강서 굴다리 밑
 # driver.find_element(By.CSS_SELECTOR,'#center > option:nth-child(3)').click();
