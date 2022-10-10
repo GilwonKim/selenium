@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-
 import time
 import csv
 
@@ -28,51 +27,49 @@ driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
 driver.find_element(By.ID,"process_login").click();
 driver.find_element(By.ID,"user_id").send_keys("sun0yoon26");
 driver.find_element(By.ID,"user_password").send_keys("cotton123!");
-# driver.implicitly_wait(2) #로딩이 끝날 때까지 2초를 기다려준다.
 time.sleep(1)
 driver.find_element(By.CLASS_NAME,"submit").click()
 
 
+
+#강서 굴다리 밑
+time.sleep(0.5)
+driver.find_element(By.CSS_SELECTOR,'#center > option:nth-child(3)').click(); #강서 구립 선택   
+time.sleep(0.5)
+driver.find_element(By.CSS_SELECTOR,'#place > option:nth-child(4)').click(); #3,4,5,6 중 6번 코트 선택
+time.sleep(0.5)
+driver.find_element(By.CSS_SELECTOR,'#search > fieldset > div > div > div > button').click(); #조회 버튼 클릭
+time.sleep(0.5)
+driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
+time.sleep(0.5)
+driver.find_element(By.CSS_SELECTOR,'#date-20221105').click();#특정 날짜 선택
+time.sleep(0.5)
+
+
+
 #황금내 날짜 선택
-time.sleep(0.5)
-driver.find_element(By.CSS_SELECTOR,'#search > fieldset > div > div > div > button').click();
-# driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
-time.sleep(0.5)
-driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();
-time.sleep(0.5)
+# time.sleep(0.5)
+# driver.find_element(By.CSS_SELECTOR,'#search > fieldset > div > div > div > button').click(); #조회 버튼 클릭
+# # driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
+# time.sleep(0.5)
+# driver.find_element(By.XPATH,'//*[@id="date-20221015"]').click();#날짜 선택
+# time.sleep(0.5)
 
 #열리는 시간까지 새로고침
 while True:
     now = datetime.now()
     print(now)
-    # start_time = now.replace(hour=12, minute=35)
-    end_time = now.replace(hour=13, minute=00)
+    end_time = now.replace(hour=12, minute=45)
 
-    if (driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").get_attribute("stlye") == None) and (now <= end_time): #체크로 바뀌거나 오픈 시간에 도달하면 refresh를 멈춤
+    if (driver.find_element(By.XPATH,"//*[@id='checkbox_time_1']").get_attribute("stlye") == None) and (now <= end_time): #체크로 바뀌거나 오픈 시간에 도달하면 refresh를 멈춤
         # time.sleep(0.1) #로딩시간까지 0.25초 기다림
-        driver.refresh()
+        driver.refresh() #계속 REFRESH
         continue
-    else: driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").get_attribute("stlye") != None
-    driver.find_element(By.XPATH,"//*[@id='checkbox_time_2']").click(); #클릭 할 게 없으면 에러 발생함
+    else: driver.find_element(By.XPATH,"//*[@id='checkbox_time_1']").get_attribute("stlye") != None
+    driver.find_element(By.XPATH,"//*[@id='checkbox_time_1']").click(); # 주의! 클릭 할 게 없으면 에러 발생함
     driver.implicitly_wait(0.5) #로딩이 끝날 때까지 0.5초를 기다려준다.
     driver.find_element(By.CSS_SELECTOR,'#contents > article > div > div > div.order_r > button').click();
     break
-
-
-
-#강서 굴다리 밑
-# driver.find_element(By.CSS_SELECTOR,'#center > option:nth-child(3)').click();
-# driver.implicitly_wait(1)
-# driver.find_element(By.XPATH,'//*[@id="place"]/option[4]').click();
-# driver.implicitly_wait(1)
-# driver.find_element(By.CSS_SELECTOR,'#place > option:nth-child(4)').click();
-# driver.implicitly_wait(1)
-# # driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
-# time.sleep(0.2)
-# driver.find_element(By.CSS_SELECTOR,'#date-20221015').click();
-
-
-
 
 
 #대관 신청 클릭
