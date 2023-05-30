@@ -102,6 +102,7 @@ driver.find_element(By.CLASS_NAME,"submit").click()
 ##################
 time.sleep(0.5)
 driver.find_element(By.CSS_SELECTOR,'#search > fieldset > div > div > div > button').click(); #조회 버튼 클릭
+time.sleep(0.5)
 # driver.find_element(By.ID,"next_month").click();#다음달로 달력을 넘길 때 필수!
 time.sleep(0.5)
 driver.find_element(By.XPATH,'//*[@id="date-20221112"]').click();#날짜 선택
